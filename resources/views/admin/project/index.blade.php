@@ -13,6 +13,7 @@
                     <th scope="col">Nome</th>
                     <th scope="col">Descrizione</th>
                     <th scope="col">Img</th>
+                    <th scope="col">Type</th>
                     <th scope="col">Azioni</th>
                 </tr>
             </thead>
@@ -40,9 +41,17 @@
                             @endif
                         </td>
 
+                        <td>
+                            {{ $project->type->title }}
+                        </td>
+
                         <td class="d-flex h-100">
-                            <button onclick="submitform({{ $project->id }})" class="btn btn-warning mx-2"><i
+                            <form action="{{ route('admin.projects.edit', $project) }}" method="GET">
+                                @csrf
+                                <button type="submit" class="btn btn-warning mx-2"><i
                                     class="fa-solid fa-pencil"></i></button>
+                            </form>
+
                             <form onsubmit="return confirm('Sei sicuro di voler eliminare il progietto=')"
                                 action="{{ route('admin.projects.destroy', $project) }}" method="POST">
                                 @csrf
@@ -59,14 +68,5 @@
 
             </tbody>
         </table>
-
-        <script>
-            function submitform(id) {
-
-                const form = document.getElementById(`form-${id}`)
-                form.submit();
-            }
-        </script>
-
     </div>
 @endsection

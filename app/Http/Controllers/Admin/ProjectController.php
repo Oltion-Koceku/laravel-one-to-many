@@ -6,6 +6,7 @@ use App\Functions\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectRequest;
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -71,9 +72,11 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Project $project)
     {
-        //
+
+        $types = Type::all();
+        return view('admin.project.edit', compact('project', 'types'));
     }
 
     /**
@@ -82,7 +85,7 @@ class ProjectController extends Controller
     public function update(ProjectRequest $request, Project $project)
     {
 
-        $val_data = $request->validate();
+
 
         $exist = Project::where('title', $request->title)->first();
 
