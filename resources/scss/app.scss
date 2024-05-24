@@ -1,0 +1,54 @@
+@import '~bootstrap/scss/bootstrap';
+
+header {
+    height: 60px;
+    background-color: rgb(1, 1, 54);
+
+    button {
+        border-color: white !important;
+    }
+}
+
+.admin-dash {
+    height: calc(100vh - 60px);
+    background-color: white;
+
+    aside {
+        height: calc(100vh - 60px);
+        width: 250px;
+        background-color: rgb(1, 1, 54);
+        color: white;
+        padding-top: 15px;
+
+        li {
+            list-style: none;
+            margin-bottom: 5px;
+
+            a {
+                text-decoration: none;
+                font-size: 20px;
+                color: lightgray;
+            }
+        }
+
+    }
+}
+
+
+.main-right {
+  overflow: auto;
+  width: 100%;
+   input{
+        width: 55%;
+    }
+  .project-table{
+
+    width: 700px;
+    input{
+        width: 300px;
+        border: none;
+        outline: none;
+    }
+}
+}
+
