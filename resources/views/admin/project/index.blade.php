@@ -42,7 +42,10 @@
                         </td>
 
                         <td>
-                            {{ $project->type->title }}
+                            @if ($project->type)
+                                {{ $project->type->title }}
+                            @endif
+
                         </td>
 
                         <td class="d-flex h-100">

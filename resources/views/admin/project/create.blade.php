@@ -15,9 +15,10 @@
         @csrf
         <div class="mb-3">
             <label for="title" class="form-label">Titolo</label>
-            <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" id="title" aria-describedby="emailHelp" value="{{ old('title') }}">
+            <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" id="title"
+                aria-describedby="emailHelp" value="{{ old('title') }}">
             {{-- con @error message funziona --}}
-           @error('title')
+            @error('title')
                 <div id="validationServerUsernameFeedback" class="invalid-feedback">
                     <h3>{{ $message }}</h3>
                 </div>
@@ -27,12 +28,24 @@
         </div>
         <div class="mb-3">
             <label for="img" class="form-label">Immagine</label>
-            <input name="img" type="file" class="form-control @error('img') is-invalid @enderror" id="img" value="{{ old('img') }}">
+            <input name="img" type="file" class="form-control @error('img') is-invalid @enderror" id="img"
+                value="{{ old('img') }}">
             @error('thumb')
                 <div id="validationServerUsernameFeedback" class="invalid-feedback">
                     <h3>{{ $message }}</h3>
                 </div>
             @enderror
+        </div>
+
+        <div class="mb-3">
+            <select name="type_id" class="form-select" aria-label="Default select example" name="type_id">
+                <option value="">Scegli il Type</option>
+
+                @foreach ($types as $type)
+                    <option value="{{ $type->id }}">
+                        {{ $type->title }}</option>
+                @endforeach
+            </select>
         </div>
 
         <div class="mb-3">

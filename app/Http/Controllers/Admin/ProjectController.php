@@ -28,7 +28,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.project.create');
+        $types = Type::all();
+        return view('admin.project.create', compact('types'));
     }
 
     /**
@@ -53,6 +54,8 @@ class ProjectController extends Controller
             $new_project->slug = Helper::makeSlug($new_project->title, Project::class);
             // operazione ternario per l'immagine
             $new_project->img = $request->img ? Storage::put('uploads', $request->img) : null;
+            $new_project->type_id = $request->type_id;
+            $new_project->description = $request->description;
             $new_project->save();
 
             return redirect()->route('admin.projects.index')->with('good', 'Il Progetto è stato aggiunto con successo');
@@ -84,10 +87,13 @@ class ProjectController extends Controller
      */
     public function update(ProjectRequest $request, Project $project)
     {
+        $val_data = $request->all();
 
 
 
-        $exist = Project::where('title', $request->title)->first();
+        $exist = Project::where('title', $request->title)
+               ->where('id', '!=', $project->id)
+               ->first();
 
         if ($exist) {
 
@@ -96,6 +102,8 @@ class ProjectController extends Controller
 
 
             $val_data['slug'] = Helper::makeSlug($request->title, Project::class);
+
+
 
             $project->update($val_data);
 

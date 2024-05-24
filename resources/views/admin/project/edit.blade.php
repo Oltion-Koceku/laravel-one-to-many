@@ -37,7 +37,7 @@
         </div>
 
         <div class="mb-3">
-            <select class="form-select" aria-label="Default select example" name="type_id">
+            <select name="type_id" class="form-select" aria-label="Default select example" name="type_id">
                 <option value="">Scegli il Type</option>
 
                 @foreach ($types as $type)
