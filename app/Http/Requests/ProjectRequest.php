@@ -23,7 +23,7 @@ class ProjectRequest extends FormRequest
     {
         return [
             "title" => "required|min:3|max:100",
-            "description" => "min:10",
+            "description" => "max:255",
             "img" => "image|mimes:png,jpg|max:20480"
         ];
     }
@@ -37,7 +37,7 @@ class ProjectRequest extends FormRequest
             "title.min" => "ci devono essere almeno :min caratteri",
             "title.max" => "ci sono più di :max caratteri",
 
-            "description.min" => "ci devono essere almeno :min caratteri",
+            "description.min" => "Non ci devono essere più di :max caratteri",
 
             "img.image" => "è richiesta un immagine",
             "img.mimes" => "è richiesto un file png oppure jpg",

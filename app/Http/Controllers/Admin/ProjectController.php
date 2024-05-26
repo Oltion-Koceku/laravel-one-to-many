@@ -15,12 +15,35 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $projects = Project::all();
 
-        return view('admin.project.index', compact('projects'));
+        // dd($request->order);
+        if ($request->title) {
+
+            $projects = Project::where('title', 'LIKE', '%'. $request->title . '%')->paginate(15);
+
+        } else {
+            $projects = Project::orderby('id', 'DESC')->paginate(15);
+
+        }
+
+
+        $direction = 'DESC';
+
+
+        return view('admin.project.index', compact('projects', 'direction'));
+    }
+
+
+    public function orderBy($direction, $column){
+
+        $direction = $direction === 'DESC' ? 'ASC' : 'DESC';
+        $projects = Project::orderBy($column, $direction)->paginate(15);
+
+        return view('admin.project.index', compact('projects', 'direction'));
+
     }
 
     /**
@@ -39,20 +62,21 @@ class ProjectController extends Controller
     {
 
 
-
+        // Se esiste il progentto grazie alla query di sql prendendo il primo risultato ci reindirizza alla index
 
         $exist = Project::where('title', $request->title)->first();
 
         if ($exist) {
 
-            return redirect()->route('admin.projects.index')->with('error', 'Questo TITOLO esiste già!');
-        }else{
+            return redirect()->route('admin.projects.create')->with('error', 'Questo TITOLO esiste già!');
+        } else {
 
             $new_project = new Project();
 
             $new_project->title = $request->title;
             $new_project->slug = Helper::makeSlug($new_project->title, Project::class);
-            // operazione ternario per l'immagine
+            // operazione ternario per l'immagine, inseriamo grazie a questo metodo? ,Storage::put('uploads', $request->img) , bnello storage l'immagine
+
             $new_project->img = $request->img ? Storage::put('uploads', $request->img) : null;
             $new_project->type_id = $request->type_id;
             $new_project->description = $request->description;
@@ -60,16 +84,15 @@ class ProjectController extends Controller
 
             return redirect()->route('admin.projects.index')->with('good', 'Il Progetto è stato aggiunto con successo');
         }
-
-
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Project $project)
     {
-        //
+        $data = $project;
+        return view('admin.project.show', compact('data'));
     }
 
     /**
@@ -92,13 +115,13 @@ class ProjectController extends Controller
 
 
         $exist = Project::where('title', $request->title)
-               ->where('id', '!=', $project->id)
-               ->first();
+            ->where('id', '!=', $project->id)
+            ->first();
 
         if ($exist) {
 
-            return redirect()->route('admin.projects.index')->with('error', 'Questo TITOLO esiste già!');
-        }else{
+            return redirect()->route('admin.projects.edit', $project->id)->with('error', 'Questo TITOLO esiste già!');
+        } else {
 
 
             $val_data['slug'] = Helper::makeSlug($request->title, Project::class);
@@ -109,8 +132,6 @@ class ProjectController extends Controller
 
             return redirect()->route('admin.projects.index')->with('good', 'Il Progetto è stato aggiunto con successo');
         }
-
-
     }
 
     /**

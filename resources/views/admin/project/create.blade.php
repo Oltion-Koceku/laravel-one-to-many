@@ -10,6 +10,14 @@
         </div>
     @endif
 
+    @if (session('error'))
+        <div class="alert alert-danger text-center w-25 container">
+
+                <h3>{{ session('error') }}</h3>
+
+        </div>
+    @endif
+
 
     <form action="{{ route('admin.projects.store') }}" enctype="multipart/form-data" method="POST" class="m-5 w-50 create">
         @csrf
@@ -28,8 +36,7 @@
         </div>
         <div class="mb-3">
             <label for="img" class="form-label">Immagine</label>
-            <input name="img" type="file" class="form-control @error('img') is-invalid @enderror" id="img"
-                value="{{ old('img') }}">
+            <input name="img" type="file" class="form-control" id="img" value="{{ old('img') }}">
             @error('thumb')
                 <div id="validationServerUsernameFeedback" class="invalid-feedback">
                     <h3>{{ $message }}</h3>
@@ -50,7 +57,13 @@
 
         <div class="mb-3">
             <label for="description" class="form-label">Descrizione</label>
-            <textarea name="description" type="text" class="form-control" id="description">{{ old('description') }}</textarea>
+            <textarea name="description" type="text" class="form-control @error('description') is-invalid @enderror"
+                id="description">{{ old('description') }}</textarea>
+            @error('description')
+                <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                    <h3>{{ $message }}</h3>
+                </div>
+            @enderror
         </div>
 
 

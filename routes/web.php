@@ -37,9 +37,14 @@ Route::middleware(['auth', 'verified'])
         Route::resource('technologies', TechnologyController::class);
         Route::resource('types', TypeController::class);
 
+
+        // rotte custom
+
+        Route::get('/orderby/{direction}/{column}', [ProjectController::class, 'orderBy'])->name('orderby');
+
+
     });
 
-// questo è Project
 
 
 
