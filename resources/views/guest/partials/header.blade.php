@@ -1,8 +1,28 @@
 <header>
 
-    <nav class="navbar">
-        <div class="container-fluid">
-            <a class="navbar-brand text-white " href="#">Brand</a>
+    <nav class="navbar h-100">
+        <div class="container-fluid ">
+            <?php
+            if (Auth::check()) {
+                $user = Auth::user();
+
+                $firstLetter = Str::substr($user->name, 0, 1);
+                $lastLetter = Str::substr($user->name, -1, 1);
+
+                $iniziali = $firstLetter . $lastLetter;
+            }
+
+            ?>
+            @if (Auth::check())
+                <div class="circle">
+                    {{ $iniziali }}
+                </div>
+            @else
+                <div class="h-100 d-flex align-items-center ">
+                    <h5 class="text-white"><i class="fa-solid fa-user"></i>
+                        Guest</h5>
+                </div>
+            @endif
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                 aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="text-white"><i class="fa-solid fa-bars"></i></span>
@@ -37,7 +57,7 @@
                         </li>
                     </ul>
 
-                     {{-- Auth::check() restituisce true o false, se sono logggato o meno --}}
+                    {{-- Auth::check() restituisce true o false, se sono logggato o meno --}}
                     @if (Auth::check())
                         <form class="d-flex mt-3" action="{{ route('logout') }}" method="POST" role="search">
                             @csrf

@@ -13,7 +13,7 @@
     @if (session('error'))
         <div class="alert alert-danger text-center w-25 container">
 
-                <h3>{{ session('error') }}</h3>
+            <h3>{{ session('error') }}</h3>
 
         </div>
     @endif
@@ -36,12 +36,13 @@
         </div>
         <div class="mb-3">
             <label for="img" class="form-label">Immagine</label>
-            <input name="img" type="file" class="form-control" id="img" value="{{ old('img') }}">
+            <input name="img" type="file" class="form-control" id="img" value="{{ old('img') }}" onchange="showImage(event)">
             @error('thumb')
                 <div id="validationServerUsernameFeedback" class="invalid-feedback">
                     <h3>{{ $message }}</h3>
                 </div>
             @enderror
+            <img id="thumb" src="placeholder.jpg" alt="preview" style="max-width: 100%; height: 200px; margin-top: 10px;">
         </div>
 
         <div class="mb-3">
@@ -69,5 +70,13 @@
 
         <button type="submit" class="btn btn-primary p-4 ">Invia</button>
     </form>
+
+    <script>
+        function showImage(event) {
+            const thumb = document.getElementById('thumb');
+            console.log(thumb);
+            thumb.src = URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
 
 @endsection
