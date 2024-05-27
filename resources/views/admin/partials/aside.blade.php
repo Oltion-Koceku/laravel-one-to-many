@@ -1,6 +1,6 @@
 <aside>
     <div class="container">
-        <ul>
+        <ul class="navbar p-2">
             <li><a href="{{route('admin.projects.index')}}"><i class="fa-solid fa-bars-progress"></i> Projects</a></li>
             <li><a href="{{route('admin.projects.create')}}"><i class="fa-solid fa-plus"></i> Crea un Progetto</a></li>
             <li><a href="{{route('admin.technologies.index')}}"><i class="fa-solid fa-microchip"></i> Technologies</a></li>
